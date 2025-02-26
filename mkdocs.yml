@@ -1,10 +1,9 @@
-site_name: Advanced AI Assistant
-site_description: Documentation for the Advanced AI Assistant
-site_author: Your Name
-site_url: https://example.com/
+site_name: AVA6 Documentation
+site_description: Documentation for the AVA6 AI Assistant
+site_author: AVA6 Team
 
-repo_name: yourusername/ai-assistant
-repo_url: https://github.com/yourusername/ai-assistant
+repo_url: https://github.com/djflorence/AVA6
+edit_uri: edit/main/docs/
 
 theme:
   name: material
@@ -12,44 +11,33 @@ theme:
     primary: indigo
     accent: indigo
   features:
-    - navigation.tabs
-    - navigation.sections
+    - navigation.instant
+    - navigation.tracking
     - navigation.expand
-    - navigation.top
-    - search.highlight
-    - search.share
-  icon:
-    repo: fontawesome/brands/github
+    - navigation.indexes
+    - content.code.annotate
 
 markdown_extensions:
   - admonition
   - codehilite
-  - footnotes
-  - meta
-  - pymdownx.arithmatex
-  - pymdownx.betterem
-  - pymdownx.caret
-  - pymdownx.critic
-  - pymdownx.details
-  - pymdownx.emoji
   - pymdownx.highlight
-  - pymdownx.inlinehilite
-  - pymdownx.keys
-  - pymdownx.mark
-  - pymdownx.smartsymbols
   - pymdownx.superfences
   - pymdownx.tabbed
-  - pymdownx.tasklist:
-      custom_checkbox: true
-  - pymdownx.tilde
-  - toc:
-      permalink: true
+  - pymdownx.details
 
 nav:
   - Home: index.md
-  - Configuration: configuration.md
+  - Getting Started: getting-started.md
+  - User Guide:
+    - Installation: user-guide/installation.md
+    - Configuration: user-guide/configuration.md
+    - Usage: user-guide/usage.md
+  - Developer Guide:
+    - Architecture: developer-guide/architecture.md
+    - Memory System: developer-guide/memory-system.md
+    - Contributing: developer-guide/contributing.md
   - API Reference: api-reference.md
-  - Contributing: contributing.md
+  - Changelog: changelog.md
 
 plugins:
   - search

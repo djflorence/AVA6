@@ -1,111 +1,36 @@
-# Advanced AI Assistant Documentation
+# AVA6: Advanced AI Assistant
 
-Welcome to the documentation for the Advanced AI Assistant, a powerful conversational AI system built with LangChain and ChromaDB.
+Welcome to the documentation for AVA6, an advanced AI assistant built with LangChain and ChromaDB.
 
 ## Overview
 
-This AI assistant is designed to provide a sophisticated conversational experience with:
+AVA6 is a powerful AI assistant that combines the capabilities of large language models with a sophisticated memory system to provide a more personalized and context-aware experience. It leverages LangChain for orchestrating the AI components and ChromaDB for efficient vector storage and retrieval.
 
-- Advanced memory capabilities
-- Emotional intelligence
-- Tool integration
-- Customizable responses
+## Key Features
 
-## Architecture
-
-The assistant is built with a modular architecture:
-
-```
-                  ┌─────────────┐
-                  │    User     │
-                  └──────┬──────┘
-                         │
-                         ▼
-┌───────────────────────────────────────────┐
-│              Chat Assistant               │
-└─┬─────────────┬─────────────┬─────────────┘
-  │             │             │
-  ▼             ▼             ▼
-┌──────────┐ ┌──────────┐ ┌──────────┐
-│   LLM    │ │  Memory  │ │  Tools   │
-└──────────┘ └──────────┘ └──────────┘
-                 │
-                 ▼
-           ┌──────────┐
-           │ ChromaDB │
-           └──────────┘
-```
-
-## Key Components
-
-### LLM Integration
-
-The assistant uses state-of-the-art language models to generate responses. It supports:
-
-- OpenAI models (GPT-4, GPT-3.5)
-- Anthropic models (Claude)
-- Custom model integration
-
-### Memory System
-
-The memory system is multi-tiered:
-
-- **Short-term memory**: Recent conversation context
-- **Working memory**: Active information for current tasks
-- **Long-term memory**: Persistent knowledge stored in ChromaDB
-- **Episodic memory**: Past interactions and their outcomes
-
-### Emotional Intelligence
-
-The assistant can detect and respond to emotions in user messages:
-
-- Emotion detection in text
-- Appropriate response generation
-- Emotional state tracking
-
-### Tool Integration
-
-The assistant can use various tools to enhance its capabilities:
-
-- Calculator for arithmetic operations
-- Weather information
-- Web search (configurable)
-- Custom tool integration
+- **Long-term Memory**: Remembers past conversations and user preferences across sessions
+- **Context-aware Responses**: Generates responses that take into account the full conversation history
+- **Optimized Vector Storage**: Uses ChromaDB with HNSW configuration for fast similarity searches
+- **Modular Architecture**: Easy to extend and customize for different use cases
 
 ## Getting Started
 
-To get started with the assistant, follow these steps:
+To get started with AVA6, check out the [Getting Started](getting-started.md) guide or dive into the [Installation](user-guide/installation.md) instructions.
 
-1. Install the required dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+## Project Structure
 
-2. Set up your environment variables:
-   ```bash
-   cp .env.example .env
-   # Edit .env with your API keys
-   ```
-
-3. Run the assistant:
-   ```bash
-   python -m src.main
-   ```
-
-## Configuration
-
-The assistant can be configured through:
-
-- Environment variables
-- Configuration files
-- Command-line arguments
-
-See the [Configuration Guide](configuration.md) for more details.
-
-## API Reference
-
-For detailed API documentation, see the [API Reference](api-reference.md).
+```
+AVA6/
+├── src/                    # Source code
+│   ├── memory/             # Memory management components
+│   ├── models/             # Model configurations
+│   ├── utils/              # Utility functions
+│   └── main.py             # Entry point
+├── tests/                  # Test suite
+├── docs/                   # Documentation
+└── .github/workflows/      # CI/CD pipelines
+```
 
 ## Contributing
 
-Contributions are welcome! See the [Contributing Guide](contributing.md) for more information. 
+Contributions are welcome! Please see our [Contributing Guide](developer-guide/contributing.md) for more information on how to get involved. 
