@@ -1,0 +1,17 @@
+[
+  {"input": "I'm so happy today! Everything is going great!", "expected_emotion": "joy"},
+  {"input": "I feel really sad and down today. Nothing seems to be going right.", "expected_emotion": "sadness"},
+  {"input": "I'm so frustrated with this! It's making me really angry!", "expected_emotion": "anger"},
+  {"input": "I'm really worried about my upcoming presentation. I'm afraid I'll mess it up.", "expected_emotion": "fear"},
+  {"input": "What's the weather like today?", "expected_emotion": "neutral"},
+  {"input": "I can't believe this happened! This is amazing!", "expected_emotion": "surprise"},
+  {"input": "I'm feeling pretty good today, nothing special though.", "expected_emotion": "neutral"},
+  {"input": "I'm absolutely thrilled about the news!", "expected_emotion": "joy"},
+  {"input": "I'm devastated by what happened yesterday.", "expected_emotion": "sadness"},
+  {"input": "This makes me so mad I could scream!", "expected_emotion": "anger"},
+  {"input": "I'm terrified of what might happen next.", "expected_emotion": "fear"},
+  {"input": "Wow! I never expected that to happen!", "expected_emotion": "surprise"},
+  {"input": "Can you help me with this problem?", "expected_emotion": "neutral"},
+  {"input": "I'm feeling a bit anxious about the meeting tomorrow.", "expected_emotion": "fear"},
+  {"input": "I'm so proud of what we accomplished!", "expected_emotion": "joy"}
+] 

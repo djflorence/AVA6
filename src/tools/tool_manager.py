@@ -5,6 +5,7 @@ Tool management for the AI Assistant.
 import importlib
 import logging
 import re
+import os
 from typing import Any, Dict, List, Optional, Tuple, Union
 
 logger = logging.getLogger(__name__)
@@ -169,6 +170,128 @@ class WeatherTool(BaseTool):
             return f"Error getting weather information: {str(e)}"
 
 
+class WebSearchTool(BaseTool):
+    """Web search tool."""
+    
+    name: str = "web_search"
+    description: str = "Searches the web for information"
+    
+    def __init__(self, config: Dict[str, Any]):
+        """Initialize the web search tool."""
+        super().__init__(config)
+        
+        # Handle both string and boolean values for ENABLE_WEB_SEARCH
+        enable_web_search = config.get("ENABLE_WEB_SEARCH", "false")
+        if isinstance(enable_web_search, bool):
+            self.enabled = enable_web_search
+        else:
+            self.enabled = enable_web_search.lower() in ("true", "1", "yes")
+        
+        if not self.enabled:
+            logger.info("Web search tool is disabled")
+            return
+        
+        try:
+            # Import the web search module
+            from src.tools.web_search import WebSearchToolkit, SearchProvider
+            
+            # Get the default search provider from config
+            default_provider = config.get("DEFAULT_SEARCH_PROVIDER", "duckduckgo").lower()
+            
+            # Initialize the web search toolkit
+            api_keys = {
+                "serpapi": config.get("SERPAPI_API_KEY"),
+                "google": config.get("GOOGLE_API_KEY"),
+                "tavily": config.get("TAVILY_API_KEY")
+            }
+            
+            # Filter out None values
+            api_keys = {k: v for k, v in api_keys.items() if v}
+            
+            # Initialize with the default provider
+            self.search_toolkit = WebSearchToolkit(
+                providers=[default_provider],
+                api_keys=api_keys
+            )
+            
+            logger.info(f"Web search tool initialized with provider: {default_provider}")
+        except Exception as e:
+            logger.error(f"Error initializing web search tool: {str(e)}")
+            self.enabled = False
+    
+    def can_handle(self, query: str) -> bool:
+        """Check if query is asking for web search."""
+        if not self.enabled:
+            return False
+        
+        # Check for explicit search requests
+        search_keywords = [
+            "search", "look up", "find", "google", "web", "internet",
+            "information about", "tell me about", "what is", "who is",
+            "where is", "when did", "how to", "latest", "news about",
+            "current", "recent"
+        ]
+        
+        query_lower = query.lower()
+        
+        # Check for search keywords
+        for keyword in search_keywords:
+            if keyword in query_lower:
+                return True
+        
+        # Check for question patterns that might benefit from web search
+        question_patterns = [
+            r'^what\s+is\s+',
+            r'^who\s+is\s+',
+            r'^where\s+is\s+',
+            r'^when\s+did\s+',
+            r'^how\s+to\s+',
+            r'^why\s+did\s+',
+            r'^can\s+you\s+find\s+'
+        ]
+        
+        for pattern in question_patterns:
+            if re.search(pattern, query_lower):
+                return True
+        
+        return False
+    
+    def execute(self, query: str) -> str:
+        """Search the web for the query."""
+        if not self.enabled:
+            return "Web search tool is disabled."
+        
+        try:
+            # Extract the search query
+            # For simplicity, we'll use the entire query
+            search_query = query
+            
+            # Remove common prefixes to get a cleaner search query
+            prefixes_to_remove = [
+                "search for ", "look up ", "find ", "google ", 
+                "search the web for ", "can you find ", "tell me about ",
+                "what is ", "who is ", "where is ", "when did ", "how to "
+            ]
+            
+            for prefix in prefixes_to_remove:
+                if search_query.lower().startswith(prefix):
+                    search_query = search_query[len(prefix):]
+                    break
+            
+            # Perform the search
+            result = self.search_toolkit.search(search_query)
+            
+            # Format the result
+            if result:
+                return f"Web search results for '{search_query}':\n\n{result}"
+            else:
+                return f"No results found for '{search_query}'."
+        
+        except Exception as e:
+            logger.error(f"Error in web search tool: {str(e)}")
+            return f"Error searching the web: {str(e)}"
+
+
 class ToolManager:
     """
     Tool manager for the AI Assistant.
@@ -215,6 +338,17 @@ class ToolManager:
         if enable_weather:
             self.tools["weather"] = WeatherTool(self.config)
             logger.info("Weather tool initialized")
+        
+        # Add web search tool if enabled
+        web_search_enabled = self.config.get("ENABLE_WEB_SEARCH", "false")
+        if isinstance(web_search_enabled, bool):
+            enable_web_search = web_search_enabled
+        else:
+            enable_web_search = web_search_enabled.lower() in ("true", "1", "yes")
+            
+        if enable_web_search:
+            self.tools["web_search"] = WebSearchTool(self.config)
+            logger.info("Web search tool initialized")
         
         # Load additional tools from plugins if available
         self._load_plugin_tools()

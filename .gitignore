@@ -39,9 +39,12 @@ logs/
 src/data/chroma/
 src/data/chroma_dev/
 src/data/conversations/
+chromadb/
 
 # Environment variables
 .env
+.env.*
+!.env.example
 
 # OS specific
 .DS_Store
@@ -54,6 +57,7 @@ Thumbs.db
 .coverage
 htmlcov/
 .pytest_cache/
+test_results/
 
 # Distribution / packaging
 .Python
@@ -71,4 +75,10 @@ sdist/
 var/
 *.egg-info/
 .installed.cfg
-*.egg 
+*.egg
+
+# Backups
+backups/
+
+# API keys and sensitive information
+*_secure.txt 

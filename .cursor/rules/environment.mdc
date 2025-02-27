@@ -1,0 +1,9 @@
+---
+description: Enviroment Rules
+globs: 
+---
+We aer in a windows environment running Powershell
+ For PowerShell commands, I'll use single quotes for strings that don't need variable expansion
+I'll avoid using backslashes in f-strings in Python commands
+I'll test my commands mentally before executing them
+For complex Python one-liners, I'll break them down into simpler parts

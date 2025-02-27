@@ -123,7 +123,7 @@ def main() -> None:
         print(f"\nAn error occurred: {str(e)}")
     finally:
         # Cleanup
-        assistant.save_conversation_history()
+        assistant.memory_manager.save_conversation()
 
 
 if __name__ == "__main__":

@@ -16,18 +16,22 @@ from fastapi.templating import Jinja2Templates
 logger = logging.getLogger(__name__)
 
 # Create FastAPI app
-app = FastAPI(title="AI Assistant", description="Advanced AI Assistant with LangChain and ChromaDB")
+app = FastAPI(
+    title="AI Assistant",
+    description="Advanced AI Assistant with LangChain and ChromaDB",
+)
 
 # Set up templates directory
 templates_dir = Path(__file__).parent.parent.parent / "src" / "utils" / "templates"
 if not templates_dir.exists():
     templates_dir.mkdir(parents=True)
-    
+
     # Create a basic HTML template if it doesn't exist
     index_html = templates_dir / "index.html"
     if not index_html.exists():
         with open(index_html, "w") as f:
-            f.write("""
+            f.write(
+                """
 <!DOCTYPE html>
 <html>
 <head>
@@ -195,7 +199,8 @@ if not templates_dir.exists():
     </script>
 </body>
 </html>
-            """)
+            """
+            )
 
 templates = Jinja2Templates(directory=str(templates_dir))
 
@@ -205,22 +210,19 @@ _assistant = None
 
 class ConnectionManager:
     """Manage WebSocket connections."""
-    
+
     def __init__(self):
         self.active_connections: List[WebSocket] = []
-    
+
     async def connect(self, websocket: WebSocket):
         await websocket.accept()
         self.active_connections.append(websocket)
-    
+
     def disconnect(self, websocket: WebSocket):
         self.active_connections.remove(websocket)
-    
+
     async def send_message(self, message: str, websocket: WebSocket):
-        await websocket.send_json({
-            "sender": "assistant",
-            "message": message
-        })
+        await websocket.send_json({"sender": "assistant", "message": message})
 
 
 # Create connection manager
@@ -241,12 +243,12 @@ async def websocket_endpoint(websocket: WebSocket):
         while True:
             data = await websocket.receive_json()
             user_message = data.get("message", "")
-            
+
             if not user_message:
                 continue
-            
+
             logger.info(f"Received message: {user_message}")
-            
+
             # Process message with assistant
             if _assistant is not None:
                 try:
@@ -256,8 +258,10 @@ async def websocket_endpoint(websocket: WebSocket):
                     logger.error(f"Error processing message: {str(e)}")
                     await manager.send_message(f"Error: {str(e)}", websocket)
             else:
-                await manager.send_message("Assistant not initialized properly.", websocket)
-    
+                await manager.send_message(
+                    "Assistant not initialized properly.", websocket
+                )
+
     except WebSocketDisconnect:
         manager.disconnect(websocket)
         logger.info("Client disconnected")
@@ -269,7 +273,7 @@ async def websocket_endpoint(websocket: WebSocket):
 def start_web_ui(assistant: Any, host: str = "127.0.0.1", port: int = 8000) -> None:
     """
     Start the web UI.
-    
+
     Args:
         assistant: The assistant instance
         host: Host to bind the server to
@@ -277,6 +281,6 @@ def start_web_ui(assistant: Any, host: str = "127.0.0.1", port: int = 8000) -> N
     """
     global _assistant
     _assistant = assistant
-    
+
     logger.info(f"Starting web UI on http://{host}:{port}")
-    uvicorn.run(app, host=host, port=port) 
+    uvicorn.run(app, host=host, port=port)

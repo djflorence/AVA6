@@ -1,142 +1,166 @@
-# Advanced AI Assistant with LangChain and ChromaDB
+# Ava - Emotionally Intelligent AI Assistant
 
-An advanced AI chat/assistant bot built with LangChain and ChromaDB, featuring enhanced memory, emotional intelligence, and a robust toolset.
+Ava is an advanced AI assistant with emotional intelligence capabilities, designed to understand and respond to user emotions while maintaining a comprehensive memory of interactions.
 
-## 🌟 Features
+## Features
 
-- **Advanced Memory System**: Long-term and short-term memory capabilities using ChromaDB for vector storage
-- **Emotional Intelligence**: Emotion detection, tracking, and appropriate responses
-- **Tool Integration**: Extensible tool framework for adding capabilities
-- **Multi-Modal Support**: Ready for text, and expandable to other modalities
-- **Conversation History**: Persistent conversation tracking with context management
-- **Customizable Responses**: Tailored responses based on user preferences and history
-- **Secure & Private**: Local deployment options with data privacy controls
+- **Emotion Detection**: Recognizes user emotions from text input and responds appropriately
+- **Memory Management**: Stores and retrieves information about users, conversations, and preferences
+- **Personalized Responses**: Tailors responses based on user history and emotional context
+- **Backstory Integration**: Incorporates a consistent backstory to provide depth and personality
 
-## 📋 Project Structure
-
-```
-.
-├── src/                    # Source code
-│   ├── assistant/          # Core assistant functionality
-│   ├── tools/              # Tool integrations
-│   ├── memory/             # Memory management
-│   ├── emotions/           # Emotional intelligence
-│   ├── embeddings/         # Vector embeddings
-│   ├── config/             # Configuration
-│   ├── utils/              # Utility functions
-│   ├── data/               # Data storage
-│   └── tests/              # Unit and integration tests
-├── docs/                   # Documentation
-├── requirements.txt        # Dependencies
-├── .env.example            # Example environment variables
-├── setup.py                # Package setup
-└── README.md               # This file
-```
-
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
-- Python 3.10+
-- pip (Python package manager)
+- Python 3.8 or higher
+- OpenAI API key
+- Hugging Face API key (optional, for local emotion detection)
 
 ### Installation
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/ai-assistant.git
-   cd ai-assistant
+   git clone https://github.com/yourusername/ava.git
+   cd ava
    ```
 
-2. Create a virtual environment:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-
-3. Install dependencies:
+2. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
 
-4. Set up environment variables:
+3. Create a `.env` file based on the provided `.env.example`:
    ```bash
    cp .env.example .env
-   # Edit .env with your API keys and configuration
    ```
 
-### Running the Assistant
+4. Edit the `.env` file with your API keys and configuration.
+
+### Running Ava
+
+To start a conversation with Ava:
 
 ```bash
-python -m src.main
+python src/main.py
 ```
 
-## 🔧 Configuration
+## Development
 
-The assistant can be configured through:
-- Environment variables (see `.env.example`)
-- Configuration files in `src/config/`
-- Command-line arguments
+### Setting Up the Development Environment
 
-## 🧠 Memory System
-
-The assistant uses a multi-tiered memory system:
-- **Short-term memory**: Recent conversation context
-- **Working memory**: Active information for current tasks
-- **Long-term memory**: Persistent knowledge stored in ChromaDB
-- **Episodic memory**: Past interactions and their outcomes
-
-## 🛠️ Tools
-
-The assistant can be extended with various tools:
-- Web search
-- Document processing
-- Calculator
-- Weather information
-- Calendar integration
-- Custom API integrations
-
-## 🔄 Development Workflow
-
-1. Create a new branch for your feature
-2. Implement and test your changes
-3. Run the test suite: `pytest`
-4. Format code: `black src/`
-5. Submit a pull request
-
-## 📚 Documentation
-
-Comprehensive documentation is available in the `docs/` directory.
-To build and view the documentation locally:
+We provide a script to set up the development environment:
 
 ```bash
-mkdocs serve
+python setup_dev_environment.py
 ```
 
-Then visit `http://localhost:8000` in your browser.
+This script:
+1. Installs all required dependencies
+2. Sets up pre-commit hooks for code quality
+3. Configures the development environment
 
-## 🧪 Testing
+### Code Quality
 
-Run the test suite:
+We maintain high code quality standards using several tools:
 
-```bash
-pytest
+1. **Linting**: We use a combination of flake8, black, and isort to ensure code quality and consistency.
+
+   ```bash
+   # Check for linting issues
+   python lint.py --check
+   
+   # Automatically fix linting issues
+   python lint.py --fix
+   ```
+
+2. **Pre-commit Hooks**: We use pre-commit hooks to automatically check code quality before commits.
+
+   ```bash
+   # Install pre-commit hooks (done by setup_dev_environment.py)
+   pre-commit install
+   
+   # Run pre-commit hooks manually
+   pre-commit run --all-files
+   ```
+
+3. **Testing**: We have comprehensive tests to ensure functionality.
+
+   ```bash
+   # Run all tests
+   python test_ava_chat.py
+   
+   # Run specific test suites
+   python test_ava_chat.py --test-suite emotions
+   ```
+
+## Testing
+
+Comprehensive testing tools are provided to ensure Ava's functionality:
+
+1. Prepare the testing environment:
+   ```bash
+   python prepare_ava_test.py
+   ```
+
+2. Run the tests:
+   ```bash
+   # Windows
+   run_ava_tests.bat
+   
+   # Linux/Mac
+   ./run_ava_tests.sh
+   ```
+
+For detailed testing instructions, see [README_TESTING.md](README_TESTING.md).
+
+## Project Structure
+
+```
+ava/
+├── src/                    # Source code
+│   ├── assistant/          # Core assistant functionality
+│   ├── emotions/           # Emotion detection components
+│   ├── memory/             # Memory management system
+│   ├── utils/              # Utility functions
+│   └── main.py             # Entry point
+├── tests/                  # Test files
+├── .env.example            # Example environment variables
+├── prepare_ava_test.py     # Test preparation script
+├── test_ava_chat.py        # Chat testing script
+├── requirements.txt        # Python dependencies
+└── README.md               # This file
 ```
 
-For coverage report:
+## Memory System
 
-```bash
-pytest --cov=src
-```
+Ava uses ChromaDB as a vector database to store and retrieve memories. Memories are categorized into:
 
-## 📄 License
+- **Facts**: Information about the user
+- **Interactions**: Previous conversations
+- **Preferences**: User preferences and settings
+- **Reflections**: Ava's thoughts and observations
+- **Backstory**: Ava's personal history and characteristics
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+## Emotion Detection
 
-## 🤝 Contributing
+Ava uses a combination of:
+
+1. Hugging Face transformer models for local emotion detection
+2. OpenAI's language models for nuanced emotion understanding
+
+The emotion detection sensitivity can be configured in the `.env` file.
+
+## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## 📞 Support
+## License
 
-For support, please open an issue on the GitHub repository. 
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+- OpenAI for providing the GPT models
+- Hugging Face for emotion detection models
+- LangChain for the framework components 

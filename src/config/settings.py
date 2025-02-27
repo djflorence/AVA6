@@ -71,6 +71,10 @@ class Settings(BaseModel):
                     # Extract the non-None type from Optional[T]
                     field_type = next((t for t in field_type.__args__ if t is not type(None)), str)
                 
+                # Strip any comments from the environment variable value
+                if '#' in env_value:
+                    env_value = env_value.split('#')[0].strip()
+                
                 if field_type is bool:
                     env_settings[field_name] = env_value.lower() in ("true", "1", "yes")
                 elif field_type is int:

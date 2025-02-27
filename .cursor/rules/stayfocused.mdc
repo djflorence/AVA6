@@ -2,4 +2,5 @@
 description: Stay Focused on Task
 globs: 
 ---
-Make sure you an constantly checking online resources for langchain and chromadb best practices and help
+Make sure you an constantly checking online resources for langchain (https://python.langchain.com/docs/introduction/) and chromadb best practices and help.
+Also https://huggingface.co/bhadresh-savani/distilbert-base-uncased-emotion
