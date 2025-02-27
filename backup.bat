@@ -35,7 +35,7 @@ git commit -m "%COMMIT_MSG%"
 
 REM Push to GitHub
 echo Pushing to GitHub...
-git push origin develop
+git push origin clean-develop
 
 echo.
 echo Backup completed successfully!
